@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Contacts</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding-top: 70px;
+            /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+        }
+    </style>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script id="contactTemplate" type="text/x-jQuery-tmpl">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><a href="#">${first_name} ${last_name}</a></h3>
+            </div>
+            <div class="panel-body">
+                ${email}
+                <button class="btn btn-danger pull-right">Delete</button>
+            </div>
+        </div>
+    </script>
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Contacts</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul id="navlinks" class="nav navbar-nav pull-right">
+                <li id="login-link" style="display:none"><a href="#myModal" data-toggle="modal">Login</a></li>
+                <li id="logout-link" style="display:none" onclick="on_logout()"><a href="#">Logout</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="col-md-6">
+
+        <div id="myList"></div>
+
+
+        <div id="content-area" style="display:none">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a id="previous-btn" href="#" aria-label="Previous" data-href=null onclick="move_previous();">
+                            <span aria-hidden="true">Previous</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="next-btn" href="#" aria-label="Next" data-href="https://com-devjoy-contactsapi.herokuapp.com/contacts/?page=2" onclick="move_next();">
+                            <span aria-hidden="true">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div id="contacts-list">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><a href="#">Joe Bloggs</a></h3>
+                    </div>
+                    <div class="panel-body">
+                        richard@example.com
+                        <button class="btn btn-danger pull-right">Delete</button>
+                    </div>
+                </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Joe Bloggs</a></h3>
+                    </div>
+                    <div class="panel-body">
+                        richard@example.com
+                        <button class="btn btn-danger pull-right">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h1>JQuery Single Page App</h1>
+
+        <h2>Background</h2>
+        <p>This is a simple front end application connecting to a REST API built using Django Rest Framwork and using Token Authentication.</p>
+
+        <p>The client application is a single HTML page with Bootstrap and JQuery. Communication with the Backend API is via JQuery Ajax calls.</p>
+
+        <p>After logging in to the site an authentication token is stored in local storage and used for subsequent requests to the API.</p>
+
+        <h2>API</h2>
+        The backend or the app is a simple <a href="https://com-devjoy-contactsapi.herokuapp.com/">contacts Rest API</a> built using Django Rest Framework.
+
+        <h2>Frontend</h2>
+        The front end for the app uses Bootstrap, JQuery and JQuery templates.
+
+    </div>
+
+
+    </div>
+<!-- /.container -->
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form id="login-form" class="animate form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="uname"><b>Username</b></label>
+                            <input id="uname" class="form-control" type="text" placeholder="Enter Username" name="uname" required>
+
+                            <label for="pword"><b>Password</b></label>
+                            <input id="pword" class="form-control" type="password" placeholder="Enter Password" name="psw" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-default">Login</button>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- jQuery Version 1.11.1 -->
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="js/login.js"></script>
+<script src="js/site.js"></script>
+<script src="js/contacts.js"></script>
+
+</body>
+
+</html>
