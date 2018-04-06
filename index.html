@@ -92,7 +92,34 @@
                         </a>
                     </li>
                 </ul>
+                <ul class="pagination pull-right">
+                    <li>
+                        <a id="add-contact-btn">Add</a>
+                    </li>
+                </ul>
             </nav>
+
+            <div id="create-contact-panel" class="panel panel-primary" style="display: none;">
+                <div class="panel-heading">
+                    Create a contact
+                </div>
+                <div class="panel-body">
+                    <form class="form" id="contact-form" method="POST">
+                        <div class="form-group">
+                            <p><label for="first_name">First Name</label>
+                                <input type="text" name="first_name" id="first_name" class="form-control" autocomplete="given-name"></p>
+
+                            <p><label for="last_name">Last Name</label>
+                                <input type="text" name="last_name" id="last_name" class="form-control" autocomplete="family-name"></p>
+
+                            <p><label for="email">Email</label>
+                                <input type="text" name="email" id="email" class="form-control" autocomplete="email"></p>
+
+                            <button class="btn btn-primary pull-right" id="btn_create">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <div id="contacts-list">
                 <div class="panel panel-primary">

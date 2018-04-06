@@ -2,6 +2,10 @@
 BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
 CONTACTS_URL = BASE_URL + "/contacts";
 
+$("#add-contact-btn").click(function(){
+    $("#create-contact-panel").slideToggle("slow");
+});
+
 
 function move_previous() {
     var url = document.getElementById('previous-btn').getAttribute("data-href");
@@ -43,13 +47,11 @@ function on_receive_contacts(data) {
 
 }
 
-function on_create_contact(contact) {
-    // Append a contact list item to the contacts list
-    $("#contacts").append($("<li>").text(contact.first_name + " " + contact.last_name + " (" + contact.email + ")"));
+
+function on_create_contact() {
+    $("input[type=text], textarea").val("");
+    $("#create-contact-panel").slideUp("slow");
 }
-
-
-
 
 
 function update_screen(url) {
@@ -60,6 +62,11 @@ function update_screen(url) {
 }
 
 $(document).ready(function () {
+    $("#contact-form").submit(function(e){
+        e.preventDefault();
+        create_contact($("#first_name").val(), $("#last_name").val(), $("#email").val(), on_create_contact);
+    });
+
     $("#login-form").submit(function(e){
         e.preventDefault();
         $('#myModal').modal('hide');
