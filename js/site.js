@@ -48,7 +48,7 @@ function on_receive_contacts(data) {
 }
 
 
-function on_create_contact() {
+function on_toggle_like(resp) {
     $("input[type=text], textarea").val("");
     $("#create-contact-panel").slideUp("slow");
 }
