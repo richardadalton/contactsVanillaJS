@@ -69,7 +69,7 @@ $(document).ready(function () {
 
     $("#login-form").submit(function(e){
         e.preventDefault();
-        $('#myModal').modal('hide');
+        $('#loginModal').modal('hide');
         do_login($("#uname").val(), $("#pword").val(), update_screen);
     });
 
