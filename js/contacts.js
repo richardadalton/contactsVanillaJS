@@ -1,4 +1,3 @@
-// Hit the Rest API, get a list of contacts, and append each one to the UL
 function get_contacts(url, on_success) {
     $.ajax({
         url: url,
@@ -11,6 +10,21 @@ function get_contacts(url, on_success) {
         success: on_success
     });
 }
+
+
+function delete_contact(url, on_success) {
+    $.ajax({
+        url: url,
+        type: "DELETE",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        headers: {
+            "Authorization": "Token " + localStorage.authtoken
+        },
+        success: on_success
+    });
+}
+
 
 function create_contact(first_name, last_name, email, on_success) {
     var data ={
@@ -32,15 +46,3 @@ function create_contact(first_name, last_name, email, on_success) {
     });
 }
 
-function delete_contact(id, on_success) {
-    $.ajax({
-        url: BASE_URL + "/contacts/" + id,
-        type: "DELETE",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        headers: {
-            "Authorization": "Token " + localStorage.authtoken
-        },
-        success: on_success
-    });
-}
