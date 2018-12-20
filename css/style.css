@@ -6,3 +6,14 @@ body {
 .modal-content {
     padding: 0 20px;
 }
+
+
+#create-contact-panel {
+    margin-top: 20px;
+}
+
+#contacts-list {
+    overflow-y: scroll;
+    height:600px;
+    margin-top: 20px;
+}

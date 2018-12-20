@@ -1,28 +1,29 @@
-function get_contacts(url, on_success) {
-    $.ajax({
-        url: url,
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        headers: {
-            "Authorization": "Token " + localStorage.authtoken
-        },
-        success: on_success
-    });
+BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
+CONTACTS_URL = BASE_URL + "/contacts_all";
+
+function get_contacts(on_success) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+        on_receive_contacts(xhr.responseText);
+    };
+
+    xhr.open('GET', CONTACTS_URL);
+    xhr.setRequestHeader("Authorization", "Token " + localStorage.authtoken);
+    xhr.send();
 }
 
 
 function delete_contact(url, on_success) {
-    $.ajax({
-        url: url,
-        type: "DELETE",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        headers: {
-            "Authorization": "Token " + localStorage.authtoken
-        },
-        success: on_success
-    });
+    var xhr = new XMLHttpRequest();
+
+    xhr.onload = function () {
+        on_contact_deleted();
+    };
+
+    xhr.open('DELETE', url);
+    xhr.setRequestHeader("Authorization", "Token " + localStorage.authtoken);
+    xhr.send();
 }
 
 
@@ -33,16 +34,14 @@ function create_contact(first_name, last_name, email, on_success) {
         "email": email
     };
 
-    $.ajax({
-        url: BASE_URL + "/contacts/",
-        type: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        headers: {
-            "Authorization": "Token " + localStorage.authtoken
-        },
-        success: on_success
-    });
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      on_create_contact(xhr.responseText);
+    };
+
+    xhr.open('POST', BASE_URL + "/contacts/");
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader("Authorization", "Token " + localStorage.authtoken);
+    xhr.send(JSON.stringify(data));
 }
 

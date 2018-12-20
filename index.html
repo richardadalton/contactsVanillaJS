@@ -71,28 +71,10 @@
 
     <div class="col-md-6">
 
-        <div id="myList"></div>
-
-
         <div id="content-area" style="display:none">
+
             <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li>
-                        <a id="previous-btn" href="#" aria-label="Previous" data-href=null onclick="move_previous_click();">
-                            <span aria-hidden="true">Previous</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="next-btn" href="#" aria-label="Next" data-href="https://com-devjoy-contactsapi.herokuapp.com/contacts/?page=2" onclick="move_next_click();">
-                            <span aria-hidden="true">Next</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="pagination pull-right">
-                    <li>
-                        <a href="javascript:add_contact_click()" id="add-contact-btn">Add</a>
-                    </li>
-                </ul>
+                <a href="javascript:add_contact_click()" class="btn btn-success" id="add-contact-btn">Add</a>
             </nav>
 
             <div id="create-contact-panel" class="panel panel-primary" style="display: none;">
@@ -119,16 +101,19 @@
 
             <div id="contacts-list">
             </div>
+
         </div>
+
+
     </div>
 
     <div class="col-md-6">
-        <h1>JQuery Single Page App</h1>
+        <h1>Vanilla JS Single Page App</h1>
 
         <h2>Background</h2>
         <p>This is a simple front end application connecting to a REST API built using Django Rest Framwork and using Token Authentication.</p>
 
-        <p>The client application is a single HTML page with Bootstrap and JQuery. Communication with the Backend API is via JQuery Ajax calls.</p>
+        <p>The client application is a single HTML page with Bootstrap and Vanilla JS. Communication with the Backend API is via Ajax calls.</p>
 
         <p>After logging in to the site an authentication token is stored in local storage and used for subsequent requests to the API.</p>
 
@@ -136,12 +121,13 @@
         The backend or the app is a simple <a href="https://com-devjoy-contactsapi.herokuapp.com/">contacts Rest API</a> built using Django Rest Framework.
 
         <h2>Frontend</h2>
-        The front end for the app uses Bootstrap, JQuery and JQuery templates.
-
-    </div>
+        The front end for the app uses Bootstrap, and Vanilla JS.
 
 
     </div>
+
+
+</div>
 <!-- /.container -->
 
 <!-- Login Modal -->

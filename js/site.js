@@ -1,12 +1,27 @@
-// BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
-BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
-CONTACTS_URL = BASE_URL + "/contacts";
+function show(elem) {
+    elem.style.display = 'block';
+}
 
+
+function hide(elem) {
+    elem.style.display = 'none';
+}
+
+
+function toggle(elem) {
+    // If the element is visible, hide it
+    if (window.getComputedStyle(elem).display === 'block') {
+        hide(elem);
+        return;
+    }
+    // Otherwise, show it
+    show(elem);
+}
 
 
 // Button Click Handlers
 function add_contact_click() {
-    $("#create-contact-panel").slideToggle("slow");
+    toggle(document.getElementById('create-contact-panel'));
 }
 
 
@@ -16,63 +31,48 @@ function delete_contact_click(url) {
 }
 
 
-function move_previous_click() {
-    var url = document.getElementById('previous-btn').getAttribute("data-href");
-    update_screen(url);
-}
-
-
-function move_next_click() {
-    var url = document.getElementById('next-btn').getAttribute("data-href");
-    update_screen(url);
-}
-
-
 
 // Callbacks
 function on_logout() {
     do_logout();
-    update_buttons();
+    update_screen();
 }
 
 
 function on_contact_deleted() {
-    update_screen(CONTACTS_URL);
+    update_screen();
 }
 
 
 function on_receive_contacts(data) {
-    next_url = data['next'];
-    document.getElementById('next-btn').setAttribute('data-href', next_url);
-
-    previous_url = data['previous'];
-    document.getElementById('previous-btn').setAttribute('data-href', previous_url);
-
-    $("#contacts-list").empty();
-    $("#contactTemplate").tmpl(data.results).appendTo("#contacts-list");
-
+    json = JSON.parse(data);
+    var list = document.getElementById('contacts-list');
+    while(list.firstChild) list.removeChild(list.firstChild);
+    $("#contactTemplate").tmpl(json).appendTo("#contacts-list");
 }
 
-
+function on_create_contact(data) {
+    toggle(document.getElementById('create-contact-panel'));
+}
 
 
 // Screen Update Methods
 function update_buttons() {
     if(localStorage.authtoken) {
-        $("#login-link").hide();
-        $("#logout-link").show();
-        $("#content-area").show();
+        hide(document.getElementById('login-link'));
+        show(document.getElementById('logout-link'));
+        show(document.getElementById('content-area'));
     } else {
-        $("#login-link").show();
-        $("#logout-link").hide();
-        $("#content-area").hide();
+        show(document.getElementById('login-link'));
+        hide(document.getElementById('logout-link'));
+        hide(document.getElementById('content-area'));
     }
 }
 
 
-function update_screen(url) {
+function update_screen() {
     if(localStorage.authtoken) {
-        get_contacts(url, on_receive_contacts);
+        get_contacts(on_receive_contacts);
     }
     update_buttons();
 }
@@ -80,16 +80,27 @@ function update_screen(url) {
 
 // Wire up html elements
 $(document).ready(function () {
-    $("#login-form").submit(function(e){
+    var login_form = document.getElementById("login-form");
+    login_form.addEventListener("submit", function(e){
         e.preventDefault();
         $('#loginModal').modal('hide');
-        do_login($("#uname").val(), $("#pword").val(), update_screen);
+
+        username = document.getElementById('uname').value;
+        password = document.getElementById('pword').value;
+
+        do_login(username, password, update_screen);
     });
 
 
-    $("#contact-form").submit(function(e){
+    var contact_form = document.getElementById("contact-form");
+    contact_form.addEventListener("submit", function(e){
         e.preventDefault();
-        create_contact($("#first_name").val(), $("#last_name").val(), $("#email").val(), on_create_contact);
+
+        first_name = document.getElementById('first_name').value;
+        last_name = document.getElementById('last_name').value;
+        email = document.getElementById('email').value;
+
+        create_contact(first_name, last_name, email, on_create_contact);
     });
 
 
@@ -98,5 +109,5 @@ $(document).ready(function () {
         $(this).find('#btn-delete').attr('href', url);
     });
 
-    update_screen(CONTACTS_URL);
+    update_screen();
 });

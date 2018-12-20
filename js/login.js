@@ -4,20 +4,20 @@ function do_login(username, password, on_success) {
         "password": password
     };
 
-    $.ajax({
-        url: BASE_URL + "/api-token-auth/",
-        type: "POST",
-        data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (resp, status) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        resp = JSON.parse(xhr.responseText);
+        if (xhr.status == 200) {
             localStorage.authtoken = resp.token;
             on_success();
-        },
-        error: function(){
-            alert("Failed logging in");
+        } else {
+            alert("Failed to log in");
         }
-    })
+    };
+
+    xhr.open('POST', BASE_URL + "/api-token-auth/");
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data));
 }
 
 function do_logout() {
