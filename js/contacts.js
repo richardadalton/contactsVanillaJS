@@ -1,5 +1,5 @@
 BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
-CONTACTS_URL = BASE_URL + "/contacts_all";
+CONTACTS_URL = BASE_URL + "/contacts_all/";
 
 function get_contacts(on_success) {
     var xhr = new XMLHttpRequest();
@@ -9,6 +9,7 @@ function get_contacts(on_success) {
     };
 
     xhr.open('GET', CONTACTS_URL);
+    xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader("Authorization", "Token " + localStorage.authtoken);
     xhr.send();
 }
@@ -22,6 +23,7 @@ function delete_contact(url, on_success) {
     };
 
     xhr.open('DELETE', url);
+    xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader("Authorization", "Token " + localStorage.authtoken);
     xhr.send();
 }
