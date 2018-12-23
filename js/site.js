@@ -45,10 +45,16 @@ function on_contact_deleted() {
 
 
 function on_receive_contacts(data) {
-    json = JSON.parse(data);
+    data = JSON.parse(data);
+
+    json = { 'contacts': data };
     var list = document.getElementById('contacts-list');
     while(list.firstChild) list.removeChild(list.firstChild);
-    $("#contactTemplate").tmpl(json).appendTo("#contacts-list");
+
+    var tmpl = document.getElementById('contactTemplate').innerHTML;
+    html = Mustache.to_html(tmpl, json);
+
+    document.getElementById('contacts-list').innerHTML = html;
 }
 
 function on_create_contact(data) {
@@ -79,15 +85,13 @@ function update_screen() {
 
 
 // Wire up html elements
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function() {
+
     var login_form = document.getElementById("login-form");
     login_form.addEventListener("submit", function(e){
         e.preventDefault();
-        $('#loginModal').modal('hide');
-
         username = document.getElementById('uname').value;
         password = document.getElementById('pword').value;
-
         do_login(username, password, update_screen);
     });
 
@@ -95,11 +99,9 @@ $(document).ready(function () {
     var contact_form = document.getElementById("contact-form");
     contact_form.addEventListener("submit", function(e){
         e.preventDefault();
-
         first_name = document.getElementById('first_name').value;
         last_name = document.getElementById('last_name').value;
         email = document.getElementById('email').value;
-
         create_contact(first_name, last_name, email, on_create_contact);
     });
 
@@ -110,4 +112,6 @@ $(document).ready(function () {
     });
 
     update_screen();
+
 });
+
