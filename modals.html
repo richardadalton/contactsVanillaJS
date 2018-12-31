@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#deleteModal">Delete</button>
+
+
+<button onclick="show_modal()">Delete JS</button>
+
+
+
+<!-- Delete Modal -->
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete Contact</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <p>Are you sure you want to delete this contact?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="btn-delete" href="javascript:handle_modal()" class="btn btn-default">Yes Do It!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap.native@2.0.15/dist/bootstrap-native.min.js"></script>
+
+<script>
+
+    myModal = document.getElementById("deleteModal");
+
+
+    myModal.addEventListener('show.bs.modal', function(event){
+        alert("Loading Modal")
+    }, false);
+
+
+    function show_modal() {
+        m = document.getElementById("deleteModal");
+        var myModalInstance = new Modal(m);
+        myModalInstance.show();
+    }
+
+    function handle_modal() {
+        m = document.getElementById("deleteModal");
+        var myModalInstance = new Modal(m);
+        myModalInstance.hide();
+    }
+
+</script>
+</body>
+</html>

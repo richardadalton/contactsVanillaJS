@@ -26,7 +26,39 @@ function add_contact_click() {
 
 
 function delete_contact_click(url) {
-    $('#deleteModal').modal('hide');
+    m = document.getElementById("deleteModal");
+
+    var deleteModalOptions= {
+        title: 'Confirm Delete',
+        content: 'You sure about this?',
+    };
+
+// set a custom modal-content template
+    var deleteModalContent =
+        '<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Close">'
+        +'<span aria-hidden="true">×</span>'
+        +'</button>'
+        +'<h4 class="modal-title" id="gridModalLabel">' + deleteModalOptions.title + '</h4>'
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<p>' + deleteModalOptions.content + '</p>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-default" onclick="confirm_delete_click(' + "'" + url + "'" + ')">Yes Do It!</button>'
+        +'</div>';
+
+    var myModalInstance = new Modal(m, {
+        content: deleteModalContent
+    });
+    myModalInstance.show();
+
+    // $('#deleteModal').modal('hide');
+    // delete_contact(url, on_contact_deleted);
+}
+
+
+function confirm_delete_click(url) {
     delete_contact(url, on_contact_deleted);
 }
 
@@ -40,6 +72,10 @@ function on_logout() {
 
 
 function on_contact_deleted() {
+    m = document.getElementById("deleteModal");
+    var myModalInstance = new Modal(m);
+    myModalInstance.hide();
+
     update_screen();
 }
 
@@ -83,6 +119,11 @@ function update_screen() {
     update_buttons();
 }
 
+function on_login() {
+    new Modal(document.getElementById("loginModal")).hide();
+    update_screen();
+}
+
 
 // Wire up html elements
 document.addEventListener("DOMContentLoaded", function() {
@@ -92,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
         username = document.getElementById('uname').value;
         password = document.getElementById('pword').value;
-        do_login(username, password, update_screen);
+        do_login(username, password, on_login);
     });
 
 
@@ -106,12 +147,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
-    $('#deleteModal').on('show.bs.modal', function(e) {
-        var url = "javascript:delete_contact_click('" + $(e.relatedTarget).data('href') + "')";
-        $(this).find('#btn-delete').attr('href', url);
-    });
+    myModal = document.getElementById("deleteModal");
+
+    // myModal.addEventListener('show.bs.modal', function(event){
+    //     var url = "javascript:delete_contact_click('" + $(e.relatedTarget).data('href') + "')";
+    //     $(this).find('#btn-delete').attr('href', url);
+    // }, false);
 
     update_screen();
-
 });
 
