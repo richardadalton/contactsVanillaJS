@@ -174,6 +174,6 @@ document.addEventListener("DOMContentLoaded", function() {
     //     $(this).find('#btn-delete').attr('href', url);
     // }, false);
 
-    update_screen();
+    update_screen(CONTACTS_URL);
 });
 
