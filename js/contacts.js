@@ -1,14 +1,11 @@
-BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
-CONTACTS_URL = BASE_URL + "/contacts_all/";
-
-function get_contacts(on_success) {
+function get_contacts(url, on_success) {
     var xhr = new XMLHttpRequest();
 
     xhr.onload = function () {
         on_receive_contacts(xhr.responseText);
     };
 
-    xhr.open('GET', CONTACTS_URL);
+    xhr.open('GET', url);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader("Authorization", "Token " + localStorage.authtoken);
     xhr.send();

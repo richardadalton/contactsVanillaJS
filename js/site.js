@@ -1,3 +1,7 @@
+// BASE_URL = "http://127.0.0.1:8000";
+BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
+CONTACTS_URL = BASE_URL + "/contacts/";
+
 function show(elem) {
     elem.style.display = 'block';
 }
@@ -57,9 +61,19 @@ function delete_contact_click(url) {
     // delete_contact(url, on_contact_deleted);
 }
 
-
 function confirm_delete_click(url) {
     delete_contact(url, on_contact_deleted);
+}
+
+function move_previous_click() {
+    var url = document.getElementById('previous-btn').getAttribute("data-href");
+    update_screen(url);
+}
+
+
+function move_next_click() {
+    var url = document.getElementById('next-btn').getAttribute("data-href");
+    update_screen(url);
 }
 
 
@@ -67,7 +81,7 @@ function confirm_delete_click(url) {
 // Callbacks
 function on_logout() {
     do_logout();
-    update_screen();
+    update_buttons();
 }
 
 
@@ -76,14 +90,20 @@ function on_contact_deleted() {
     var myModalInstance = new Modal(m);
     myModalInstance.hide();
 
-    update_screen();
+    update_screen(CONTACTS_URL);
 }
 
 
 function on_receive_contacts(data) {
     data = JSON.parse(data);
 
-    json = { 'contacts': data };
+    next_url = data['next'];
+    document.getElementById('next-btn').setAttribute('data-href', next_url);
+
+    previous_url = data['previous'];
+    document.getElementById('previous-btn').setAttribute('data-href', previous_url);
+
+    json = { 'contacts': data.results };
     var list = document.getElementById('contacts-list');
     while(list.firstChild) list.removeChild(list.firstChild);
 
@@ -112,16 +132,16 @@ function update_buttons() {
 }
 
 
-function update_screen() {
+function update_screen(url) {
     if(localStorage.authtoken) {
-        get_contacts(on_receive_contacts);
+        get_contacts(url, on_receive_contacts);
     }
     update_buttons();
 }
 
 function on_login() {
     new Modal(document.getElementById("loginModal")).hide();
-    update_screen();
+    update_screen(CONTACTS_URL);
 }
 
 

@@ -60,7 +60,23 @@
         <div id="content-area" style="display:none">
 
             <nav aria-label="Page navigation">
-                <a href="javascript:add_contact_click()" class="btn btn-success" id="add-contact-btn">Add</a>
+                <ul class="pagination">
+                    <li>
+                        <a id="previous-btn" href="#" aria-label="Previous" data-href=null onclick="move_previous_click();">
+                            <span aria-hidden="true">Previous</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a id="next-btn" href="#" aria-label="Next" data-href="https://com-devjoy-contactsapi.herokuapp.com/contacts/?page=2" onclick="move_next_click();">
+                            <span aria-hidden="true">Next</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="pagination pull-right">
+                    <li>
+                        <a href="javascript:add_contact_click()" class="btn btn-success" id="add-contact-btn">Add</a>
+                    </li>
+                </ul>
             </nav>
 
             <div id="create-contact-panel" class="panel panel-primary" style="display: none;">
