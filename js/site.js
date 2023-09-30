@@ -1,5 +1,5 @@
-// BASE_URL = "http://127.0.0.1:8000";
-BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
+BASE_URL = "http://127.0.0.1:8000";
+//BASE_URL = "https://com-devjoy-contactsapi.herokuapp.com";
 CONTACTS_URL = BASE_URL + "/contacts/";
 
 function show(elem) {
@@ -99,9 +99,19 @@ function on_receive_contacts(data) {
 
     next_url = data['next'];
     document.getElementById('next-btn').setAttribute('data-href', next_url);
+    if(next_url == null) {
+        hide(document.getElementById('next-btn'));
+    } else {
+        show(document.getElementById('next-btn'));
+    }
 
     previous_url = data['previous'];
     document.getElementById('previous-btn').setAttribute('data-href', previous_url);
+    if(previous_url == null) {
+        hide(document.getElementById('previous-btn'));
+    } else {
+        show(document.getElementById('previous-btn'));
+    }
 
     json = { 'contacts': data.results };
     var list = document.getElementById('contacts-list');
@@ -115,6 +125,7 @@ function on_receive_contacts(data) {
 
 function on_create_contact(data) {
     toggle(document.getElementById('create-contact-panel'));
+    update_screen(CONTACTS_URL);
 }
 
 
